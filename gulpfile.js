@@ -50,7 +50,7 @@ function images() {
                 })
             ]
         ))
-        .pipe(dest(F_imagesDir + 'dist/images'))
+        .pipe(dest(F_imagesDir + 'dist/images'));
 }
 
 function scripts() {
@@ -61,7 +61,7 @@ function scripts() {
         .pipe(concat('main.min.js'))
         .pipe(uglify())
         .pipe(dest(F_jsDir))
-        .pipe(browserSync.stream())
+        .pipe(browserSync.stream());
 }
 
 
@@ -73,7 +73,7 @@ function styles() {
             grid: true
         }))
         .pipe(dest(F_destCssDir))
-        .pipe(browserSync.stream())
+        .pipe(browserSync.stream());
 }
 
 function build() {
@@ -83,7 +83,7 @@ function build() {
         F_jsDir + 'main.min.js',
         F_views + '**/*.php',
     ], {base: 'app'})
-        .pipe(dest('dist'))
+        .pipe(dest('dist'));
 }
 
 function watching() {

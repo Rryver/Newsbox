@@ -11,8 +11,15 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
+    'modules' => [
+        'posts' => [
+            'class' => 'app\modules\posts\Module',
+        ],
+    ],
     'components' => [
         'request' => [
+//            'class' => 'common\components\Request',
+//            'web'=> '/frontend/web',
             'csrfParam' => '_csrf-frontend',
         ],
         'user' => [
@@ -36,14 +43,14 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
-        'urlManager' => [
+/*        'urlManager' => [
+            //'baseUrl' => '/',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                //'/' => 'posts/default/index',
             ],
-        ],
-        */
+        ],*/
     ],
     'params' => $params,
 ];

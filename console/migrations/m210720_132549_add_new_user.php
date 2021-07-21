@@ -18,6 +18,18 @@ class m210720_132549_add_new_user extends Migration
         $user->setPassword('admin');
         $user->generatePasswordResetToken();
         $user->generateEmailVerificationToken();
+
+        $this->insert('{{%user}}', [
+            'username' => 'admin',
+            'auth_key' => $user->auth_key,
+            'password_hash' => $user->password_hash,
+            'password_reset_token' => $user->password_reset_token,
+            'email' => 'admin@admin.com',
+            'created_at' => '0000-00-00 00:00:00',
+            'updated_at' => '0000-00-00 00:00:00',
+            'verification_token' => $user->verification_token,
+            'status' => User::STATUS_ACTIVE,
+        ]);
     }
 
     /**
@@ -25,23 +37,8 @@ class m210720_132549_add_new_user extends Migration
      */
     public function safeDown()
     {
-        echo "m210720_132549_add_new_user cannot be reverted.\n";
+        $this->delete('{{%user}}', ['username' => 'admin']);
 
         return false;
     }
-
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m210720_132549_add_new_user cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }
