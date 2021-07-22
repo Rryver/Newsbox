@@ -388,6 +388,10 @@ body {
   background: #3F51B5;
   color: #FFFFFF;
 }
+.post__btn-back {
+  display: inline-block;
+  margin-top: 50px;
+}
 .post__header {
   text-align: center;
 }
@@ -402,22 +406,33 @@ body {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+}
+.post__btn-add-favourite {
+  display: inline;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+.post__btn-add-favourite:hover {
+  text-decoration: underline;
 }
 .post__small-caption {
   margin-right: 8px;
 }
-.post__date {
-  margin-left: 37px;
+.post__image {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin-top: 20px;
 }
-.post__image-author {
-  display: inline-block;
-  border-radius: 50%;
+.post__description {
+  display: block;
+  text-align: left;
+  margin-top: 20px;
 }
 .post__content {
-  margin-top: 45px;
+  margin-top: 25px;
+  text-align: left;
 }
 .post__btn {
   display: inline-block;
@@ -425,12 +440,6 @@ body {
 }
 .post__btn_pull-right {
   float: right;
-}
-.post__conversation {
-  margin-top: 60px;
-}
-.post__comments {
-  margin-top: 60px;
 }
 .post-editor__title {
   text-align: center;

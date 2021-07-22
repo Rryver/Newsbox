@@ -3,6 +3,8 @@
 namespace app\modules\posts\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "posts_post".
@@ -10,7 +12,7 @@ use Yii;
  * @property int $id
  * @property int $user_id
  * @property string $title
- * @property string|null $desctiption
+ * @property string|null $description
  * @property string|null $content
  * @property int|null $image_preview_id
  * @property int|null $category_id
@@ -35,7 +37,7 @@ class Post extends \yii\db\ActiveRecord
         return [
             [['user_id', 'title'], 'required'],
             [['user_id', 'image_preview_id', 'category_id'], 'integer'],
-            [['desctiption', 'content'], 'string'],
+            [['description', 'content'], 'string', 'min' => 5],
             [['created_at', 'updated_at'], 'safe'],
             [['title'], 'string', 'max' => 255],
         ];
@@ -50,8 +52,8 @@ class Post extends \yii\db\ActiveRecord
             'id' => 'ID',
             'user_id' => 'User ID',
             'title' => 'Title',
-            'desctiption' => 'Desctiption',
-            'content' => 'Content',
+            'description' => 'Short description',
+            'content' => 'Text',
             'image_preview_id' => 'Image Preview ID',
             'category_id' => 'Category ID',
             'created_at' => 'Created At',
@@ -59,8 +61,32 @@ class Post extends \yii\db\ActiveRecord
         ];
     }
 
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::class,
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'updated_at',
+                'value' => new Expression('NOW()'),
+            ]
+        ];
+    }
+
 
     public function setUserId($userId) {
         $this->user_id = $userId;
     }
+
+    public function getPathToImage()
+    {
+        $image = Image::getOneById($this->image_preview_id);
+
+        if (!isset($image)) {
+            return '';
+        }
+
+        return  $image->getPathToImage();
+    }
+
 }

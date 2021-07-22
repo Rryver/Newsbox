@@ -33,7 +33,7 @@ PostsAssets::register($this);
                 <h4 class="card-post__title font-heading-2"><?= $post->title ?></h4>
               </a>
               <span class="card-post__date"><?= $post->created_at ?></span>
-              <p class="card-post__description"><?= $post->desctiption ?></p>
+              <p class="card-post__description"><?= $post->description ?></p>
             </div>
           </li>
         <?php } ?>

@@ -1,5 +1,10 @@
 .post {
 
+    &__btn-back {
+        display: inline-block;
+        margin-top: 50px;
+    }
+
     &__header {
         text-align: center;
     }
@@ -12,7 +17,17 @@
         margin-top: 29px;
         display: flex;
         justify-content: space-between;
-        align-items: center;
+    }
+
+    &__btn-add-favourite {
+        display: inline;
+        border: none;
+        outline: none;
+        background: transparent;
+
+        &:hover {
+            text-decoration: underline;
+        }
     }
 
     &__small-caption {
@@ -20,16 +35,26 @@
     }
 
     &__date {
-        margin-left: 37px;
+
     }
 
-    &__image-author {
-        display: inline-block;
-        border-radius: 50%;
+    &__image {
+        display: block;
+        max-width: 100%;
+        height: auto;
+        margin-top: 20px;
     }
+
+    &__description {
+        display: block;
+        text-align: left;
+        margin-top: 20px;
+    }
+
 
     &__content {
-        margin-top: 45px;
+        margin-top: 25px;
+        text-align: left;
     }
 
     &__btn {
@@ -41,11 +66,4 @@
         }
     }
 
-    &__conversation {
-        margin-top: 60px;
-    }
-
-    &__comments {
-        margin-top: 60px;
-    }
 }

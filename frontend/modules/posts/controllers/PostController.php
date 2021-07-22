@@ -2,12 +2,14 @@
 
 namespace app\modules\posts\controllers;
 
+use app\modules\posts\models\Image;
 use app\modules\posts\models\Post;
 use yii\helpers\Url;
 use Yii;
 use yii\data\Pagination;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 class PostController extends \yii\web\Controller
 {
@@ -78,7 +80,17 @@ class PostController extends \yii\web\Controller
     public function actionPostCreate()
     {
         $post = new Post();
+        $image = new Image();
+
         if ($post->load(Yii::$app->request->post())) {
+            $image->imageFile = UploadedFile::getInstance($image, 'imageFile');
+            if ($image->save()) {
+                $post->image_preview_id = $image->id;
+            } else {
+                Yii::$app->session->setFlash('warning', 'Something goes wrong while uploading image');
+            }
+
+
             $post->setUserId(Yii::$app->user->id);
             if ($post->save()) {
                 return $this->redirect(Url::to(['/posts/post/post', 'id' => $post->id]));
@@ -87,6 +99,7 @@ class PostController extends \yii\web\Controller
 
         return $this->render('post-edit', [
             'post' => $post,
+            'image' => $image,
         ]);
     }
 

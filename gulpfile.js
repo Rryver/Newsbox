@@ -11,7 +11,6 @@ const del = require('del');
 
 
 const F_webDir_frontend = 'frontend/web/';
-//const F_webDir_backend = 'backend/web/';
 
 const F_lessDir = F_webDir_frontend + 'less/';
 const F_lessMainFile = F_lessDir + 'style.less';

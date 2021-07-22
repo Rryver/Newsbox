@@ -3,6 +3,7 @@
 namespace app\modules\posts\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "posts_category".
@@ -43,5 +44,10 @@ class Category extends \yii\db\ActiveRecord
         ];
     }
 
-
+    public static function getAllAsMap()
+    {
+        $categories = ['-'];
+        $categories = ArrayHelper::merge($categories, ArrayHelper::map(static::find()->all(), 'id', 'name'));
+        return $categories;
+    }
 }

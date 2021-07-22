@@ -2,6 +2,8 @@
 
 namespace app\modules\posts;
 
+use Yii;
+
 /**
  * posts module definition class
  */
