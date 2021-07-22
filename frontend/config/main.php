@@ -16,6 +16,9 @@ return [
             'class' => 'app\modules\posts\Module',
         ],
     ],
+    'aliases' => [
+        '@module-posts' => '@frontend/modules/posts'
+    ],
     'components' => [
         'request' => [
 //            'class' => 'common\components\Request',

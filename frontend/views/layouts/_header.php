@@ -23,8 +23,8 @@ $linkTemplate = '<a class="menu__link" href="{url}">{label}</a>';
             ],
             'linkTemplate' => $linkTemplate,
             'items' => [
-                ['label' => 'Favorites', 'url' => ['/posts/default/favorites']],
-                ['label' => 'Posts', 'url' => ['/posts/default/post']],
+                ['label' => 'Favorites', 'url' => ['/posts/post/index']],
+                ['label' => 'Posts', 'url' => ['/posts/post/posts']],
                 ['label' => 'Signup', 'url' => ['/site/signup'], 'visible' => Yii::$app->user->isGuest],
                 Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
