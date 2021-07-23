@@ -4,12 +4,15 @@
  * @var $this yii\web\View
  * @var $posts Post[]
  * @var $pages \yii\data\Pagination
+ * @var $postSearch \app\modules\posts\models\PostSearch
  */
 
 use app\modules\posts\assets\PostsAssets;
 use app\modules\posts\models\Post;
 use common\widgets\Alert;
+use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\widgets\ActiveForm;
 use yii\widgets\LinkPager;
 use yii\widgets\Pjax;
 
@@ -23,7 +26,23 @@ PostsAssets::register($this);
 
     <h1 class="posts__logo">Posts</h1>
 
+
       <?php Pjax::begin() ?>
+
+      <?= Html::beginForm(
+          ['/posts/post/posts'],
+          'post',
+          ['data-pjax' => '', 'class' => 'posts__search-form search-form ']) ?>
+
+      <?= Html::input(
+          'text',
+          'postSearch',
+          Yii::$app->request->post('postSearch'),
+          ['class' => 'search-form__input form-edit__input']) ?>
+
+      <?= Html::submitButton('Search', ['class' => 'search-form__btn btn-common']) ?>
+      <?= Html::endForm(); ?>
+
 
     <ul class="posts__list">
         <?php foreach ($posts as $post) { ?>
@@ -54,7 +73,8 @@ PostsAssets::register($this);
       <?php Pjax::end() ?>
 
       <?php if (!Yii::$app->user->isGuest) { ?>
-        <a class="posts__btn-new-post btn-link btn-common" href="<?= Url::to(['/posts/post/post-create']) ?>">Create new post</a>
+        <a class="posts__btn-new-post btn-link btn-common" href="<?= Url::to(['/posts/post/post-create']) ?>">Create new
+          post</a>
       <?php } ?>
   </div>
 </div>

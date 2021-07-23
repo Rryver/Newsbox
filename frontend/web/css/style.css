@@ -330,6 +330,12 @@ body {
 .menu__link:hover {
   outline: 1px solid #3F51B5;
 }
+.posts__search-form {
+  margin-top: 50px;
+}
+.posts__list {
+  margin-top: 20px;
+}
 .posts__item {
   margin-bottom: 30px;
   padding-bottom: 30px;
@@ -358,12 +364,8 @@ body {
   display: inline-block;
   margin-top: 10px;
 }
-.card-post__text {
+.card-post__description {
   margin-top: 10px;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  overflow: hidden;
 }
 .pagination-widget {
   text-align: center;
@@ -388,8 +390,16 @@ body {
   background: #3F51B5;
   color: #FFFFFF;
 }
-.post__btn-back {
-  display: inline-block;
+.search-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.search-form__input {
+  min-width: unset;
+  width: 100%;
+}
+.post__btns {
   margin-top: 50px;
 }
 .post__header {

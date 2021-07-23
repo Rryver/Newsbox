@@ -4,6 +4,7 @@ namespace app\modules\posts\controllers;
 
 use app\modules\posts\models\Image;
 use app\modules\posts\models\Post;
+use app\modules\posts\models\PostSearch;
 use yii\helpers\Url;
 use Yii;
 use yii\data\Pagination;
@@ -50,6 +51,25 @@ class PostController extends \yii\web\Controller
 
     public function actionPosts()
     {
+        if (Yii::$app->request->isPjax || Yii::$app->request->isAjax) {
+            $str = Yii::$app->request->post('postSearch');
+            if (!empty($str)) {
+                $query = Post::find()->where(['like', 'title', $str]);
+            } else {
+                $query = Post::find();
+            }
+            $pages = new Pagination(['totalCount' => $query->count(), 'pageSize' => 5]);
+            $posts = $query->offset($pages->offset)
+                ->limit($pages->limit)
+                ->orderBy(['id' => SORT_DESC])
+                ->all();
+
+            return $this->render('posts', [
+                'posts' => $posts,
+                'pages' => $pages,
+            ]);
+        }
+
         $query = Post::find();
         $pages = new Pagination(['totalCount' => $query->count(), 'pageSize' => 5]);
         $posts = $query->offset($pages->offset)
@@ -64,9 +84,18 @@ class PostController extends \yii\web\Controller
         ]);
     }
 
+    public function actionPostsSearch()
+    {
+
+        $postSearch = new PostSearch();
+        //$postSearch->inputTitle;
+
+    }
+
     public function actionPost($id)
     {
         $post = Post::findOne($id);
+
 
         if (!isset($post)) {
             return $this->goBack(Yii::$app->request->referrer);

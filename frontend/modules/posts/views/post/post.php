@@ -24,7 +24,6 @@ $btnAddToFavourite = $isPostInFavourite ? 'Remove from favourite' : 'Add to favo
         <div class="post__info">
           <span class="post__date font-label">
             <span class="post__small-caption">Created: <?= empty($post->updated_at) ? 'd-m-y' : $post->created_at ?></span>
-            <span class="post__small-caption">Updated: <?= empty($post->updated_at) ? 'd-m-y' : $post->updated_at ?></span>
           </span>
             <?php if (!Yii::$app->user->isGuest) { ?>
               <button class="post__btn-add-favourite"><?= $btnAddToFavourite ?></button>
@@ -40,9 +39,12 @@ $btnAddToFavourite = $isPostInFavourite ? 'Remove from favourite' : 'Add to favo
       </div>
 
 
-      <a class="post__btn-back btn-common" href="<?= Url::to(Yii::$app->request->referrer) ?>">
-        <span class="post__icon-arrow-left glyphicon glyphicon-arrow-left"></span> Back to Posts
-      </a>
+      <div class="post__btns">
+        <a class="post__btn btn-common" href="<?= Url::to(Yii::$app->request->referrer) ?>">
+          <span class="post__icon-arrow-left glyphicon glyphicon-arrow-left"></span> Back to Posts
+        </a>
+        <a class="post__btn btn-common" href="<?= Url::to(['/posts/post/similar']) ?>">Similar posts</a>
+      </div>
     </div>
   </section>
 </div>
