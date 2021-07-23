@@ -2,6 +2,7 @@
 
 namespace app\modules\posts\controllers;
 
+use app\modules\posts\models\Favourite;
 use app\modules\posts\models\Image;
 use app\modules\posts\models\Post;
 use app\modules\posts\models\PostSearch;
@@ -10,6 +11,7 @@ use Yii;
 use yii\data\Pagination;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 use yii\web\UploadedFile;
 
 class PostController extends \yii\web\Controller
@@ -46,64 +48,108 @@ class PostController extends \yii\web\Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
-    }
-
-    public function actionPosts()
-    {
-        if (Yii::$app->request->isPjax || Yii::$app->request->isAjax) {
-            $str = Yii::$app->request->post('postSearch');
-            if (!empty($str)) {
-                $query = Post::find()->where(['like', 'title', $str]);
-            } else {
-                $query = Post::find();
-            }
-            $pages = new Pagination(['totalCount' => $query->count(), 'pageSize' => 5]);
-            $posts = $query->offset($pages->offset)
-                ->limit($pages->limit)
-                ->orderBy(['id' => SORT_DESC])
-                ->all();
-
-            return $this->render('posts', [
-                'posts' => $posts,
-                'pages' => $pages,
-            ]);
-        }
-
-        $query = Post::find();
+        $query = Post::find()->where(['id' => Favourite::getUserFavouritePosts()]);
         $pages = new Pagination(['totalCount' => $query->count(), 'pageSize' => 5]);
         $posts = $query->offset($pages->offset)
             ->limit($pages->limit)
             ->orderBy(['id' => SORT_DESC])
             ->all();
 
+        return $this->render('index', [
+            'pages' => $pages,
+            'posts' => $posts,
+        ]);
+    }
+
+    public function actionPosts()
+    {
+        $postSearch = new PostSearch();
+
+        $selectedCity = Yii::$app->request->post('selectedCity');
+        if (isset($selectedCity)) {
+            Yii::$app->session->set('selectedCity', $selectedCity);
+        }
+        $postSearch->setCity(Yii::$app->session->get('selectedCity', ''));
+
+        if (Yii::$app->request->isPjax || Yii::$app->request->isAjax) {
+            $postSearch->setInputTitle(Yii::$app->request->post('postSearch'));
+            if ($postSearch->validate()) {
+                $query = Post::find()->where(['like', 'title', $postSearch->inputTitle])->andWhere(['like', 'city_id', $postSearch->city_id]);
+            } else {
+                $query = Post::find()->where(['like', 'city_id', $postSearch->city_id]);
+            }
+        } else {
+            $query = Post::find()->where(['like', 'city_id', $postSearch->city_id]);
+        }
+
+        $postSearch->search($query);
 
         return $this->render('posts', [
+            'posts' => $postSearch->posts,
+            'pages' => $postSearch->pages,
+        ]);
+    }
+
+    /**
+     * @param int $id Post id
+     * @return string
+     */
+    public function actionPostsSimilar($categoryId)
+    {
+        $query = Post::find()->where(['category_id' => $categoryId]);
+        $pages = new Pagination(['totalCount' => $query->count(), 'pageSize' => 5]);
+        $posts = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->orderBy(['id' => SORT_DESC])
+            ->all();
+
+        return $this->render('posts-similar', [
             'posts' => $posts,
             'pages' => $pages,
         ]);
     }
 
-    public function actionPostsSearch()
-    {
-
-        $postSearch = new PostSearch();
-        //$postSearch->inputTitle;
-
-    }
-
+    /**
+     * @param int $id Post id
+     * @return string|\yii\web\Response
+     */
     public function actionPost($id)
     {
         $post = Post::findOne($id);
-
-
         if (!isset($post)) {
             return $this->goBack(Yii::$app->request->referrer);
         }
 
+        if (Favourite::find()->where(['post_id' => $post->id])->andWhere(['user_id' => Yii::$app->user->id])->one() !== null) {
+            $isPostInFavourite = true;
+        } else {
+            $isPostInFavourite = false;
+        }
+
         return $this->render('post', [
             'post' => $post,
+            'isPostInFavourite' => $isPostInFavourite,
         ]);
+    }
+
+
+    public function actionFavourite($postId, $isPostInFavourite)
+    {
+        $favouriteModel = new Favourite();
+
+        if ($isPostInFavourite) {
+            if ($favouriteModel->removeFromFavourite($postId)) {
+                Yii::$app->session->setFlash('success', 'Post was successfully removed from your favourite list');
+            }
+        } else {
+            $favouriteModel->post_id = $postId;
+            $favouriteModel->user_id = Yii::$app->user->id;
+            if ($favouriteModel->save()) {
+                Yii::$app->session->setFlash('success', 'Post was successfully added to your favourite list');
+            }
+        }
+
+        return $this->redirect(Url::to(['/posts/post/post', 'id' => $postId]));
     }
 
     public function actionPostCreate()
@@ -113,6 +159,9 @@ class PostController extends \yii\web\Controller
 
         if ($post->load(Yii::$app->request->post())) {
             $image->imageFile = UploadedFile::getInstance($image, 'imageFile');
+            if ($post->city_id == null) {
+                $post->city_id = 0;
+            }
             if ($image->save()) {
                 $post->image_preview_id = $image->id;
             } else {

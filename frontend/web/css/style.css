@@ -144,8 +144,8 @@ body {
   margin: 0 auto;
   padding: 0 15px;
 }
-.container-admin {
-  max-width: 1470px;
+.container-wide {
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 15px;
 }
@@ -257,6 +257,9 @@ body {
 .form-edit__input_textarea {
   min-height: 400px;
 }
+.form-edit_mt {
+  margin-top: 30px;
+}
 .admin-panel__title {
   display: block;
   margin-bottom: 20px;
@@ -330,6 +333,33 @@ body {
 .menu__link:hover {
   outline: 1px solid #3F51B5;
 }
+.posts__header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  position: relative;
+}
+.posts__title {
+  display: inline-block;
+}
+.posts__cities {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: absolute;
+  right: 90px;
+  min-width: unset;
+  width: 200px;
+}
+.posts__cities-btn {
+  display: inline-block;
+}
+.posts__cities-input {
+  display: inline-block;
+}
 .posts__search-form {
   margin-top: 50px;
 }
@@ -399,9 +429,6 @@ body {
   min-width: unset;
   width: 100%;
 }
-.post__btns {
-  margin-top: 50px;
-}
 .post__header {
   text-align: center;
 }
@@ -443,10 +470,19 @@ body {
 .post__content {
   margin-top: 25px;
   text-align: left;
+  word-break: break-word;
+}
+.post__btns {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-top: 50px;
 }
 .post__btn {
   display: inline-block;
-  margin-top: 50px;
 }
 .post__btn_pull-right {
   float: right;
@@ -474,6 +510,9 @@ body {
 }
 .form-post__input_textarea {
   min-height: 400px;
+}
+.form-post_mt {
+  margin-top: 30px;
 }
 .login-form {
   margin-top: 20px;

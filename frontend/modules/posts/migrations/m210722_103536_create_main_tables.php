@@ -25,7 +25,7 @@ class m210722_103536_create_main_tables extends Migration
             'description' => $this->text(),
             'content' => $this->text()->notNull(),
             'image_preview_id' => $this->integer(),
-            'category_id' => $this->integer(),
+            'category_id' => $this->integer()->notNull(),
             'created_at' => Schema::TYPE_DATETIME,
             'updated_at' => Schema::TYPE_DATETIME,
         ], $tableOptions);

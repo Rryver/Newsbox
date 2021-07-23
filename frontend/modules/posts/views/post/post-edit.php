@@ -8,6 +8,7 @@
 
 use app\modules\posts\assets\PostsAssets;
 use app\modules\posts\models\Category;
+use app\modules\posts\models\City;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -43,6 +44,7 @@ $this->title = $isEditMode ? 'Edit post' : 'New post';
       </div>
 
         <?= $form->field($post, 'category_id')->dropDownList(Category::getAllAsMap()) ?>
+        <?= $form->field($post, 'city_id')->dropDownList(City::getAllAsMap()) ?>
 
 
         <?php

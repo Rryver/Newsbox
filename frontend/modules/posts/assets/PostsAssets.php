@@ -5,6 +5,7 @@ namespace app\modules\posts\assets;
 
 
 use yii\web\AssetBundle;
+use yii\web\JqueryAsset;
 
 class PostsAssets extends AssetBundle
 {
@@ -25,5 +26,6 @@ class PostsAssets extends AssetBundle
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
+        'yii\web\JqueryAsset',
     ];
 }

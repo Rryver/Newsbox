@@ -13,11 +13,12 @@ use yii\db\Expression;
  * @property int $user_id
  * @property string $title
  * @property string|null $description
- * @property string|null $content
+ * @property string $content
  * @property int|null $image_preview_id
- * @property int|null $category_id
+ * @property int $category_id
  * @property string|null $created_at
  * @property string|null $updated_at
+ * @property int city_id
  */
 class Post extends \yii\db\ActiveRecord
 {
@@ -35,8 +36,8 @@ class Post extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'title'], 'required'],
-            [['user_id', 'image_preview_id', 'category_id'], 'integer'],
+            [['user_id', 'title', 'category_id', 'content', 'city_id'], 'required'],
+            [['user_id', 'image_preview_id', 'category_id', 'city_id'], 'integer'],
             [['description', 'content'], 'string', 'min' => 5],
             [['created_at', 'updated_at'], 'safe'],
             [['title'], 'string', 'max' => 255],

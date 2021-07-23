@@ -1,14 +1,5 @@
 .post {
 
-    &__btns {
-
-        margin-top: 50px;
-    }
-
-    &__btn {
-
-    }
-
     &__header {
         text-align: center;
     }
@@ -59,15 +50,20 @@
     &__content {
         margin-top: 25px;
         text-align: left;
+        word-break: break-word;
+    }
+
+    &__btns {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 50px;
     }
 
     &__btn {
         display: inline-block;
-        margin-top: 50px;
 
         &_pull-right {
             float: right;
         }
     }
-
 }

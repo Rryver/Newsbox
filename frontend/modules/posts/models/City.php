@@ -2,23 +2,24 @@
 
 namespace app\modules\posts\models;
 
+use phpDocumentor\Reflection\Types\Self_;
 use Yii;
 use yii\helpers\ArrayHelper;
 
 /**
- * This is the model class for table "posts_category".
+ * This is the model class for table "posts_city".
  *
  * @property int $id
  * @property string $name
  */
-class Category extends \yii\db\ActiveRecord
+class City extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'posts_category';
+        return 'posts_city';
     }
 
     /**
@@ -46,6 +47,8 @@ class Category extends \yii\db\ActiveRecord
 
     public static function getAllAsMap()
     {
-        return ArrayHelper::map(static::find()->all(), 'id', 'name');
+        $cities = ['0' => '-'];
+        $cities = ArrayHelper::merge($cities, ArrayHelper::map(static::find()->all(), 'id', 'name'));
+        return $cities;
     }
 }

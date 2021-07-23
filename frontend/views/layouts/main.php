@@ -1,6 +1,7 @@
 <?php
 
 /* @var $this \yii\web\View */
+
 /* @var $content string */
 
 use yii\helpers\Html;
@@ -16,11 +17,11 @@ AppAsset::register($this);
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
 <head>
-    <meta charset="<?= Yii::$app->charset ?>">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="<?= Yii::$app->charset ?>">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php $this->registerCsrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
+  <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
 <body>
@@ -29,8 +30,10 @@ AppAsset::register($this);
 <?= $this->render('_header') ?>
 
 <div class="wrap">
-        <?= Alert::widget() ?>
-        <?= $content ?>
+  <div class="container">
+      <?= Alert::widget() ?>
+  </div>
+    <?= $content ?>
 </div>
 
 <?= $this->render('_footer') ?>

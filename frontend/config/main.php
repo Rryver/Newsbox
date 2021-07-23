@@ -46,12 +46,10 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-/*        'urlManager' => [
-            //'baseUrl' => '/',
+        /*'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                //'/' => 'posts/default/index',
             ],
         ],*/
     ],
