@@ -46,7 +46,8 @@ return [
 ];
 ```
 - `php yii migrate` - Создать таблицы основного проекта 
-- `php yii migrate-post` - Создать таблицы модуля 
+- `php yii migrate-posts
+` - Создать таблицы модуля 
 - Открыть страницу в браузере по адресу (`localhost/Newsbox/frontend/web`)
 
 
